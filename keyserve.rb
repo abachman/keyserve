@@ -6,7 +6,7 @@
 # $ ruby heroku-sinatra-app.rb
 #
 require 'rubygems'
-require 'sinatra'
+require 'sinatra/base'
 require 'json'
 
 configure :production do
@@ -32,31 +32,12 @@ get '/' do
   keys.to_json
 end
 
-not_found do 
-  {
-    'error' => 404,
-    'message' => "could not find entry"
-  }.to_json
-end
-
-get '/:keyname' do
-  content_type :json
+get '/:keyname' do 
+  content_type 'text/plain' 
   if keys[params[:keyname]]
-    {
-      :id    => params[:keyname],
-      :value => keys[params[:keyname]]
-    }
+    keys[params[:keyname]]
   else
-    halt 404
+    halt 403, {'Content-Type' => 'text/plain'}, "could not find entry"
   end
 end
 
-# Test at <appname>.heroku.com
-
-# You can see all your app specific information this way.
-# IMPORTANT! This is a very bad thing to do for a production
-# application with sensitive information
-
-# get '/env' do
-#   ENV.inspect
-# end

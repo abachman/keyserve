@@ -1,6 +1,7 @@
-require 'app'
+require 'keyserve'
 
 ## There is no need to set directories here anymore;
 ## Just run the application
-
-run Sinatra::Application
+Keyserve.run! :host => 'localhost', :port => 9090
+#
+#run Sinatra::Application
