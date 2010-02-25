@@ -6,7 +6,7 @@
 # $ ruby heroku-sinatra-app.rb
 #
 require 'rubygems'
-require 'sinatra/base'
+require 'sinatra'
 require 'json'
 
 configure :production do
