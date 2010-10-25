@@ -1,13 +1,14 @@
 # You'll need to require these if you
 # want to develop while running with ruby.
 # The config/rackup.ru requires these as well
-# for it's own reasons.
-#
-# $ ruby heroku-sinatra-app.rb
-#
+# for its own reasons.
+
 require 'rubygems'
 require 'sinatra'
 require 'json'
+require 'haml'
+
+require 'lib/keyserve'
 
 configure :production do
   # Configure stuff here you'll want to
@@ -17,7 +18,7 @@ configure :production do
   #       from ENV['DATABASE_URI'] (see /env route below)
 end
 
-def keys 
+def keys
   {
     'adam@vostro410'   => "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA8jUYhBn0gYUl0H/lDut/rniubDzEZjB9cGcs1SjdFfmoZsKUmGcF1spqhdhBwRVqr8Z/tCHGycOtfrDUoEpRc0YIsFNRTL9koEIS21cJbpSO1ewjVfnxsPeoEB7fr1GQFX5u3BFusgL07zTaMSSOycmKntmt+odHsylJrdriLstHSqPIUYckoYUmqFbAVq9jjNEvWmGLTvecM1cyr6dHKgImtvA07Mc6XhjYaUmNuEXM5knVlnHaTrk9rZ+EGTjj81LF+LFQevxiZd6wD50DEbMmWvAGHVlCTsuL5sM4cWqINBW1Cq1kYbikaPFM5VCHYCc2YOdg3z7UnOyRHMk5+Q== adam@vostro410",
     'adam@watermelon'  => "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsHv2f+PEMnRDBq9MSqAsbbCgzgTeNEe6ys7MVaksnIodfgZAWmrY9owpzmD57z1iEZF+kpQ/7m2bBijF3A92X8QJmnlts5Zde/S8ifgT+IyvkQYZC+X/BR/YhBKTun9oDUEXbV03eUpGagVw7FleNUjfHE93beULcpXcwrhEOU2QksySMnhDtRIPxSWsv0iR1SFZDHwwPYmfh4V8W8VkQTLN/SBmR0qEhqEG+2Fr9LvQDpHQGzohjyKmvQLiA8fvx4wN+yiR2JJQqkhIa6gu4UkgaHWzvn7hWynAB1vg093DaoTMxwKGpkuhlpPvrOTHJfKb3jrGKGovnrc9utfVow== adam@watermelon",
@@ -26,18 +27,59 @@ def keys
   }
 end
 
-# Quick test
 get '/' do
   content_type :json
   keys.to_json
 end
 
-get '/:keyname' do 
-  content_type 'text/plain' 
+get '/list' do
+  content_type :json
+  keys.keys.to_json + "\n"
+end
+
+not_found do
+  content_type :json
+  {:error => "not found \n"}.to_json
+end
+
+get '/key/:keyname' do
+  content_type 'text/plain'
   if keys[params[:keyname]]
-    keys[params[:keyname]]
+    keys[params[:keyname]] + "\n"
   else
-    halt 403, {'Content-Type' => 'text/plain'}, "could not find entry"
+    halt 403, {'Content-Type' => 'text/plain'}, "could not find entry\n"
   end
 end
+
+get '/add' do
+  haml :add
+end
+
+post '/add' do
+  haml "%h1 GOT YOUR INPUT\n\n%pre\n  #{params.inspect}"
+end
+
+get '/remote' do
+  haml "%p check remote: <form action='/remote/add' method='post'><input name='hostname' type='text' /></form>"
+end
+
+post '/remote/add' do
+  haml "%p BARF OUT: #{ params[:hostname] }\n%ul\n  %li #{ SshUtils.known_hosts.map{|k| k}.join("\n  %li ") }"
+end
+
+__END__
+
+@@ add
+%h3 Add your public key
+
+%form{:action => 'add', :method => 'POST'}
+  %label
+    id
+    %input{:type => 'text', :name => 'key[id]'}
+  %br
+  %label
+    key
+    %input{:type => 'text', :name => 'key[value]', :size => 80}
+  %br
+  %input{:type => 'submit'}
 
