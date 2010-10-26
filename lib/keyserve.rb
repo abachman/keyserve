@@ -1,5 +1,6 @@
 $:.unshift File.dirname(__FILE__)
 
-require 'keyserve/ssh_utils'
-require 'keyserve/ssh_keys'
+require 'keyserve/ssh/helpers'
+require 'keyserve/ssh/hosts'
+require 'keyserve/helpers'
 

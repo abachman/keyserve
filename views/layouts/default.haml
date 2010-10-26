@@ -15,6 +15,9 @@
           = link_to_unless_current("add", "/add")
           |
           = link_to_unless_current("remote server", "/remote")
+
+          %span{:style => 'display:block;float:right;'}
+            = link_to 'Logout', '/logout'
       .clear
 
     .container_12

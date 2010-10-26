@@ -1,2 +1,2 @@
-require 'keyserve'
+require 'app'
 run KeyserveApp

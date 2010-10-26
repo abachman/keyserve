@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %title Sign In
+    %style
+      :sass
+        body
+          background: #bbbbbb
+        .login_box
+          -webkit-box-shadow: #333 2px 1px 5px
+          box-shadow: 2px 1px 5px #333333
+          border-radius: 6px
+          background-color: #FFFFFF
+          color: #333333
+          background: #fff
+          width: 220px
+          display: block
+          margin: 40px auto
+          padding: 8px
+        label span
+          display: inline-block
+          width: 100px
+          font-weight: bold
+  %body
+    %form{:action => '/login', :method => 'post'}
+      .login_box
+        %label
+          %span Email
+          %input{:type => 'text', :name => 'email', :id => 'email', :autocomplete => 'email'}
+        %br
+        %label
+          %span Password
+          %input{:type => 'password', :name => 'password', :id => 'password'}
+        %br
+        %input{:type => 'submit', :value => 'Sign In'}

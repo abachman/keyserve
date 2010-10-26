@@ -3,16 +3,33 @@
 # The config/rackup.ru requires these as well
 # for its own reasons.
 
+# libraries
 require 'sinatra/base'
-require 'config/database'
+require 'sinatra_warden'
 require 'json'
 require 'haml'
 require 'sass'
 
+# local
+require 'config/database'
+require 'models'
 require 'lib/keyserve'
 
+Warden::Strategies.add(:password) do
+  def valid?
+    params['email'] && params['password']
+  end
+
+  def authenticate!
+    u = User.authenticate(params['email'], params['password'])
+    u.nil? ? fail!("Could not log you in.") : success!(u)
+  end
+end
+
 class KeyserveApp < Sinatra::Base
-  set :session, true
+  register Sinatra::Warden
+  set :auth_failure_path, '/login'
+
   set :haml, {:format => :html5 }
   set :root, File.dirname(__FILE__)
   set :public, Proc.new { File.join(root, "public") }
@@ -25,10 +42,19 @@ class KeyserveApp < Sinatra::Base
     #       from ENV['DATABASE_URI'] (see /env route below)
   end
 
+  use Warden::Manager do |manager|
+    manager.default_strategies :password
+    manager.serialize_into_session { |user| user.id }
+    manager.serialize_from_session { |id| User.get(id) }
+    manager.failure_app = KeyserveApp
+  end
+
   helpers do
-    def keys
-      SshKeys::KEYS
-    end
+    include Keyserve::SSH::Helpers
+    include Keyserve::Helpers
+
+    include Rack::Utils
+    alias_method :h, :escape_html
 
     ## Links
     def link_to text, url=nil
@@ -69,20 +95,31 @@ class KeyserveApp < Sinatra::Base
   end
 
   get '/' do
+    authorize!
+
     haml :index, :layout => :'layouts/default'
   end
 
   get '/list' do
+    authorize!('/fail')
+
     content_type :json
-    keys.keys.to_json
+    Key.all.map(&:name).to_json
   end
 
   not_found do
     content_type :json
-    {:error => "not found \n"}.to_json
+    {:error => "not found"}.to_json
+  end
+
+  get '/fail' do
+    content_type :json
+    {:error => "not authorized"}.to_json
   end
 
   get '/key/:keyname' do
+    authorize!('/fail')
+
     content_type 'text/plain'
     if keys[params[:keyname]]
       keys[params[:keyname]] + "\n"
@@ -92,19 +129,27 @@ class KeyserveApp < Sinatra::Base
   end
 
   get '/add' do
+    authorize!
+
     haml :add, :layout => :'layouts/default'
   end
 
   post '/add' do
+    authorize!
+
     haml "%h1 GOT YOUR INPUT\n\n%pre\n  #{params.inspect}"
   end
 
   get '/remote' do
+    authorize!
+
     haml :remote, :layout => :'layouts/default'
   end
 
   post '/remote' do
-    haml "%p BARF OUT: #{ params[:hostname] }\n%ul\n  %li #{ SshUtils.known_hosts.map{|k| k}.join("\n  %li ") }"
+    authorize!
+
+    haml "%p BARF OUT: #{ params[:hostname] }\n%ul\n  %li #{ Keyserve::SSH::Hosts.known_hosts.map{|k| k}.join("\n  %li ") }"
   end
 end
 

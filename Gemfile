@@ -6,6 +6,12 @@ gem "data_objects", "= 0.10.2"
 gem "do_postgres", "= 0.10.2"
 gem "json"
 
+gem "bcrypt-ruby" # auth
+
+gem "sinatra_warden"
+gem "pony"
+
 group :development do
   gem 'thin', "= 1.2.7"
+  gem 'shotgun'
 end

@@ -5,12 +5,16 @@ if ENV['RACK_ENV'] == 'cucumber'
   puts "using cucumber database"
   DataMapper.setup(:default, {
     :database => 'keyserve_cuke',
-    :adapter  => 'postgres'
+    :adapter  => 'postgres',
+    :user     => '',
+    :password => ''
   })
 else
   # local machine - dev and production
   DataMapper.setup(:default, ENV['DATABASE_URL'] || {
     :database => 'keyserve_dev',
-    :adapter  => 'postgres'
+    :adapter  => 'postgres',
+    :user     => '',
+    :password => ''
   })
 end
