@@ -1,0 +1,14 @@
+%h3 All Available Keys
+
+%table
+  %tr
+    %th Name
+    %th Belongs To
+    %th Controls
+
+  - @keys.each do |key|
+    %tr
+      %td= key.name
+      %td= key.user ? key.user.email : 'None'
+      %td
+        = link_to 'Delete', key_path(key), :method => :delete, :confirm => 'Are you sure you want to remove this key?'

@@ -3,11 +3,13 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.1'
 gem 'pg'
 gem 'json'
-
 gem 'devise'
 gem 'cancan'
-
-gem 'haml', '= 3.0.4'
+gem 'haml-rails'
+gem 'net-ssh', :require => 'net/ssh'
+gem 'net-sftp', :require => 'net/sftp'
+gem 'find_or_redirect'
+gem 'dynamic_form'
 
 # Deploy with Capistrano
 gem 'capistrano'

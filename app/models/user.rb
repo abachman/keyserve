@@ -6,4 +6,14 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
+
+  has_many :keys
+
+  def self.by_email
+    order('email')
+  end
+
+  def self.for_select
+    by_email.map {|u| [u.email, u.id]}
+  end
 end
