@@ -1,8 +1,7 @@
-class CreateKeys < ActiveRecord::Migration
+class CreateSshKeys < ActiveRecord::Migration
   def self.up
-    create_table :keys do |t|
-      t.string :name
-      t.text :contents
+    create_table :ssh_keys do |t|
+      t.text :public_key
       t.integer :user_id
 
       t.timestamps

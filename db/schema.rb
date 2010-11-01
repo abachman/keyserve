@@ -20,14 +20,6 @@ ActiveRecord::Schema.define(:version => 20101031175551) do
     t.datetime "updated_at"
   end
 
-  create_table "keys", :force => true do |t|
-    t.string   "name"
-    t.text     "contents"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "server_users", :force => true do |t|
     t.integer  "user_id"
     t.integer  "server_id"
@@ -39,6 +31,13 @@ ActiveRecord::Schema.define(:version => 20101031175551) do
     t.string   "name"
     t.string   "hostname"
     t.integer  "key_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ssh_keys", :force => true do |t|
+    t.text     "public_key"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -55,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20101031175551) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.boolean  "admin"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

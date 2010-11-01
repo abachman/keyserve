@@ -1,5 +1,17 @@
 Keyserve::Application.routes.draw do
 
+  get "servers/index"
+
+  get "servers/new"
+
+  get "servers/create"
+
+  get "servers/edit"
+
+  get "servers/update"
+
+  get "servers/destroy"
+
   devise_for :users
 
   # The priority is based upon order of creation:

@@ -1,4 +1,4 @@
-%h3 All Available Keys
+%h3 All Available SSH Keys
 
 %table
   %tr
@@ -6,9 +6,9 @@
     %th Belongs To
     %th Controls
 
-  - @keys.each do |key|
+  - @ssh_keys.each do |key|
     %tr
       %td= key.name
       %td= key.user ? key.user.email : 'None'
       %td
-        = link_to 'Delete', key_path(key), :method => :delete, :confirm => 'Are you sure you want to remove this key?'
+        = link_to 'Delete', ssh_key_path(key), :method => :delete, :confirm => 'Are you sure you want to remove this SSH key?'
