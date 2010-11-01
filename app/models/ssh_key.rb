@@ -11,4 +11,8 @@ class SshKey < ActiveRecord::Base
       _name
     end
   end
+
+  def self.for_select
+    order(:public_key).map {|k| [k.name, k.id]}
+  end
 end

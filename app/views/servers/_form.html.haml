@@ -1,0 +1,19 @@
+= form_for @server, :html => {:id => 'server-form'} do |f|
+  %fieldset
+    = f.error_messages
+
+    %ol
+      %li
+        = f.label :name
+        = f.text_field :name
+      %li
+        = f.label :hostname
+        = f.text_field :hostname
+      %li
+        = f.label :key_id, "Default SSH Key"
+        = f.select :key_id, SshKey.for_select
+      %li
+        = link_to "Add a new SSH Key", new_ssh_key_path(:return_to => request.path)
+
+      %li
+        = f.submit

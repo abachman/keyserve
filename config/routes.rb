@@ -4,9 +4,11 @@ Keyserve::Application.routes.draw do
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
-  resources :ssh_keys
   resources :users
-  resources :servers
+  resources :ssh_keys
+  resources :servers do
+    resources :accounts
+  end
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
