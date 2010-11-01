@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %title Keyserve
+    = stylesheet_link_tag :all 
+    = csrf_meta_tag 
+    %link{:href => "http://fonts.googleapis.com/css?family=Inconsolata&subset=latin", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "http://fonts.googleapis.com/css?family=IM+Fell+English&subset=latin", :rel => "stylesheet", :type => "text/css"}/
+
+  %body
+    .container
+      .span-20
+        %h1.fancy keyserve
+      .span-4.last
+        &nbsp;
+
+      .span-4.navigation
+        &nbsp;
+      .span-16
+        - %w(success notice info error).each do |f_key| 
+          - if !flash[f_key.to_sym].nil?
+            %div{:class => f_key}
+              = flash[f_key.to_sym]
+        = yield
+      .span-4.last
+        &nbsp;

@@ -1,0 +1,23 @@
+%h3 All Servers
+
+%table
+  %tr
+    %th Name
+    %th Hostname
+    %th Accounts
+    %th Users
+    %th Controls
+
+  - @servers.each do |server|
+    %tr
+      %td= server.name
+      %td= server.hostname
+      %td
+        = server.accounts.count
+        = link_to 'add account', new_server_account_path(server)
+      %td
+        = server.users.count
+        = link_to 'add user', new_server_user_path(server, :server_id => server.id)
+      %td
+        = link_to 'View', server_path(server)
+        = link_to 'Delete', server_path(server), :method => :delete, :confirm => 'Are you sure you want to remove this server?'

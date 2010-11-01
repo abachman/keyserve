@@ -1,0 +1,16 @@
+- if current_user.admin?
+  %h4 SSH Keys
+  %ul
+    %li= link_to_unless_current "All Keys", ssh_keys_path
+    %li= link_to_unless_current "Add a Key", new_ssh_key_path
+
+  %h4 Servers
+  %ul
+    %li= link_to_unless_current "All Servers", servers_path
+    %li= link_to_unless_current "Add a Server", new_server_path
+    %li= link_to_unless_current "Add a User to a Server", new_server_user_path
+  
+  %h4 Users
+  %ul
+    %li= link_to_unless_current "All Users", users_path
+    %li= link_to_unless_current "Add a User", new_user_path

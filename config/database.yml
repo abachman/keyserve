@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  database: keyserve_dev
+
+test: &test
+  adapter: postgresql
+  database: keyserve_test
+
+production:
+  adapter: postgresql
+  database: keyserve_prod
+
+cucumber:
+  <<: *test
+

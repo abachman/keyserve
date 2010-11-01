@@ -1,5 +1,4 @@
-tmp
-tmp/*
-.bundle/
-log/
-
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/**/*

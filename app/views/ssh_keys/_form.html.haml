@@ -1,0 +1,15 @@
+= form_for @ssh_key, :html => {:id => 'key-form'} do |f|
+  %fieldset
+    = f.error_messages
+    - if params[:return_to]
+      = hidden_field_tag 'return_to', params[:return_to]
+
+    %ol
+      %li
+        = f.label :public_key
+        = f.text_area :public_key, :cols => 30, :rows => 4
+      %li
+        = f.label :user_id
+        = f.select :user_id, @users_for_select, :blank => true
+      %li
+        = f.submit

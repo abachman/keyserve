@@ -1,17 +1,26 @@
-source "http://rubygems.org/"
-gem "haml", "= 3.0.12"
-gem "sinatra", "= 1.0"
-gem "dm-core", "= 0.10.2"
-gem "data_objects", "= 0.10.2"
-gem "do_postgres", "= 0.10.2"
-gem "json"
+source 'http://rubygems.org'
 
-gem "bcrypt-ruby" # auth
+gem 'rails', '3.0.1'
+gem 'pg'
+gem 'json'
+gem 'devise'
+gem 'cancan'
+gem 'haml-rails'
+gem 'net-ssh', :require => 'net/ssh'
+gem 'net-sftp', :require => 'net/sftp'
+gem 'find_or_redirect'
+gem 'dynamic_form'
 
-gem "sinatra_warden"
-gem "pony"
+# Deploy with Capistrano
+gem 'capistrano'
 
+# To use debugger
 group :development do
-  gem 'thin', "= 1.2.7"
-  gem 'shotgun'
+  gem 'ruby-debug'
 end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'redgreen'
+end
+

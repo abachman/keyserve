@@ -1,0 +1,7 @@
+Some code adapted from Envy Labs' http://github.com/envylabs/keymaster
+
+TODO:
+
+* users have to be able to be on multiple accounts on a given server (server_users new)
+* admins should be able to add a user to a given server (new_user)
+* keys should be pushed to servers (how are keys synced?)
