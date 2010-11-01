@@ -1,11 +1,11 @@
-= form_for @key, :html => {:id => 'key-form'} do |f|
+= form_for @ssh_key, :html => {:id => 'key-form'} do |f|
   %fieldset
     = f.error_messages
 
     %ol
       %li
-        = f.label :contents
-        = f.text_area :contents, :cols => 30, :rows => 4
+        = f.label :public_key
+        = f.text_area :public_key, :cols => 30, :rows => 4
       %li
         = f.label :user_id
         = f.select :user_id, @users_for_select, :blank => true

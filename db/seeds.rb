@@ -6,7 +6,6 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-User.create :email => 'admin@slsdev.net', 
-  :password => 'password', 
-  :password_confirmation => 'password',
-  :admin => true
+admin_user = User.create :email => 'admin@slsdev.net', :password => 'password', :password_confirmation => 'password'
+admin_user.admin = true; admin_user.save
+User.create :email => 'user@slsdev.net', :password => 'password', :password_confirmation => 'password'

@@ -273,6 +273,7 @@ hr.space {background:#fff;color:#fff;visibility:hidden;}
 
 .navigation ul { list-style-type: none; margin: 0; padding: 0; }
 .navigation li { }
+.navigation h4 { font-size: 13px; font-weight: bold; margin: 12px 0 2px 0; }
 
 #key-form textarea { width: 460px; height: 120px; font-family: 'Inconsolata', arial, serif; font-size: 11px; }
 form fieldset ol { list-style-type: none; margin: 0; padding: 0; }
