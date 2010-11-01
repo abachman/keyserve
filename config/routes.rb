@@ -4,10 +4,18 @@ Keyserve::Application.routes.draw do
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
-  resources :users
+  resources :users do
+    member do
+      get :servers
+    end
+  end
   resources :ssh_keys
   resources :servers do
     resources :accounts
+    member do
+      get :new_user
+      post :add_user
+    end
   end
   resources :server_users
 

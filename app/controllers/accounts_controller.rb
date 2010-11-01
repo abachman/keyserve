@@ -4,6 +4,10 @@ class AccountsController < ApplicationController
 
   def index
     @accounts = @server.accounts
+    respond_to do |format|
+      format.html # default
+      format.json { render :json => @accounts.map {|acc| [acc.name, acc.id]} }
+    end
   end
 
   def new
@@ -15,7 +19,7 @@ class AccountsController < ApplicationController
     @account.server = @server
     if @account.save
       flash[:success] = "Added #{ @account.name } to #{ @server.hostname }"
-      redirect_to server_path(@server)
+      redirect_to servers_path
     else
       @ssh_keys_for_select = SshKey.for_select
       render 'new'

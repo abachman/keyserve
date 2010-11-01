@@ -7,6 +7,10 @@ class UsersController < ApplicationController
   def new
   end
 
+  def servers
+    render :json => @user.servers.map {|server| server.hostname}
+  end
+
   def create
   end
 

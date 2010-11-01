@@ -7,7 +7,9 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
-  has_many :keys
+  has_many :ssh_keys
+  has_many :server_users
+  has_many :servers, :through => :server_users
 
   def self.by_email
     order('email')

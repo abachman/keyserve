@@ -2,6 +2,10 @@ class ServersController < ApplicationController
   load_and_authorize_resource
 
   def index
+    respond_to do |format|
+      format.html # normal
+      format.json { render :json => Server.for_select }
+    end
   end
 
   def new
@@ -24,6 +28,12 @@ class ServersController < ApplicationController
   end
 
   def update
+  end
+
+  def new_user
+  end
+
+  def add_user
   end
 
   def destroy
