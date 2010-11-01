@@ -1,0 +1,13 @@
+%h3 Add Account to #{ @server.hostname }
+
+= form_for @account, :url => server_accounts_path(@server), :method => 'post' do |f|
+  %fieldset
+    = f.hidden_field :server_id
+    = f.error_messages
+
+    %ol
+      %li
+        = f.label :name
+        = f.text_field :name
+      %li
+        = f.submit

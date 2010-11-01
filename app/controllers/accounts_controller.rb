@@ -14,8 +14,8 @@ class AccountsController < ApplicationController
     @account = Account.new params[:account]
     @account.server = @server
     if @account.save
-      flash[:success] = "Added new #{ @account.name } to #{ @server.hostname }"
-      redirect_to server_accounts_path(@server)
+      flash[:success] = "Added #{ @account.name } to #{ @server.hostname }"
+      redirect_to server_path(@server)
     else
       @ssh_keys_for_select = SshKey.for_select
       render 'new'

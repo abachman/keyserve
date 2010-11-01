@@ -9,6 +9,7 @@ Keyserve::Application.routes.draw do
   resources :servers do
     resources :accounts
   end
+  resources :server_users
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
