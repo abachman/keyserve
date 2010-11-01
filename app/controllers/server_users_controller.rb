@@ -1,4 +1,5 @@
 class ServerUsersController < ApplicationController
+  layout 'default'
   load_and_authorize_resource
 
   def new

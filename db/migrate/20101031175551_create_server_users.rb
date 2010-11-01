@@ -3,7 +3,6 @@ class CreateServerUsers < ActiveRecord::Migration
     create_table :server_users do |t|
       t.integer :user_id
       t.integer :server_id
-      t.integer :ssh_key_id
       t.integer :account_id
 
       t.timestamps

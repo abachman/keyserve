@@ -1,4 +1,5 @@
 class SshKeysController < ApplicationController
+  layout 'default'
   load_and_authorize_resource
 
   def index

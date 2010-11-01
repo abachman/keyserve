@@ -1,53 +1,61 @@
 %h3 Add a User to a Server
 
 :javascript
-  var servers = null;
-  var user_servers = null;
-  function populate_servers() {
-    // don't run until we have servers and user_servers (race condition)
-    if (servers != null && user_servers != null) {
-      console.log('populate with servers');
-      console.log(servers);
-      console.log('populate with user_servers');
-      console.log(user_servers);
-      var available_servers = [], 
-          opts = "<option>Select one...</option>";
-      _.each(servers, function (server) {
-        if (_.indexOf(user_servers, server[0]) < 0) {
-          available_servers.push(server);
-        }
-      });
-      // do stuff with available_servers
-      _.each(available_servers, function (srvr) {
-        opts += "<option value='"+[1]+"'>"+srvr[0]+"</option>";
-      });
-      $('#server_user_server_id').html(opts);
-      servers = null; user_servers = null;
-    }
-  };
-
   $(function () {
     $('#server_user_user_id').change(function () {
       $.getJSON('/users/' + $(this).val() + '/servers', function (data) {
         user_servers = data;
         populate_servers();
       });
-      $.getJSON('/servers', function (data) {
-        servers = data;
-        populate_servers();
-      });
-    });
-
-    $('#server_user_server_id').change(function () {
-      $.getJSON('/servers/' + $(this).val() + '/accounts', function (data) {
-        var opts = "";
-        _.each(data, function (el) { 
-          opts += "<option value='"+ el[1] +"'>"+ el[0] +"</option>"; 
-        });
-        $('#server_user_account_id').html(opts);
-      });
     });
   });
+  // var servers = null;
+  // var user_servers = null;
+  // function populate_servers() {
+  //   // don't run until we have servers and user_servers (race condition)
+  //   if (servers != null && user_servers != null) {
+  //     console.log('populate with servers');
+  //     console.log(servers);
+  //     console.log('populate with user_servers');
+  //     console.log(user_servers);
+  //     var available_servers = [], 
+  //         opts = "<option>Select one...</option>";
+  //     _.each(servers, function (server) {
+  //       if (_.indexOf(user_servers, server[0]) < 0) {
+  //         available_servers.push(server);
+  //       }
+  //     });
+  //     // do stuff with available_servers
+  //     _.each(available_servers, function (srvr) {
+  //       opts += "<option value='"+[1]+"'>"+srvr[0]+"</option>";
+  //     });
+  //     $('#server_user_server_id').html(opts);
+  //     servers = null; user_servers = null;
+  //   }
+  // };
+
+  // $(function () {
+  //   $('#server_user_user_id').change(function () {
+  //     $.getJSON('/users/' + $(this).val() + '/servers', function (data) {
+  //       user_servers = data;
+  //       populate_servers();
+  //     });
+  //     $.getJSON('/servers', function (data) {
+  //       servers = data;
+  //       populate_servers();
+  //     });
+  //   });
+
+  //   $('#server_user_server_id').change(function () {
+  //     $.getJSON('/servers/' + $(this).val() + '/accounts', function (data) {
+  //       var opts = "";
+  //       _.each(data, function (el) { 
+  //         opts += "<option value='"+ el[1] +"'>"+ el[0] +"</option>"; 
+  //       });
+  //       $('#server_user_account_id').html(opts);
+  //     });
+  //   });
+  // });
 
 = form_for @server_user do |f|
   %fieldset
@@ -56,9 +64,9 @@
         Add 
         = f.select :user_id, @users_for_select, { :include_blank => true }
         to
-        = f.select :server_id, @servers_for_select, :disabled => true
+        = f.select :server_id, @servers_for_select, { :disabled => true }
         as
-        = f.select :account_id, @accounts_for_select, :disabled => true
+        = f.select :account_id, @accounts_for_select, { :disabled => true }
       %li
         = f.submit
   

@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(:version => 20101031175551) do
   create_table "server_users", :force => true do |t|
     t.integer  "user_id"
     t.integer  "server_id"
-    t.integer  "ssh_key_id"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
