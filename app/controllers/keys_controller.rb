@@ -1,5 +1,5 @@
 class SshKeysController < ApplicationController
-  before_filter :find_ssh_key, :only => [:edit, :update, :destroy]
+  load_and_authorize_resource
 
   def index
     @ssh_keys = SshKey.all

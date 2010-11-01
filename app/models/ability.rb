@@ -5,7 +5,9 @@ class Ability
     if user.admin?
       can :manage, :all
     else
-      can :read, :all
+      can :read, Server
+      can :manage, Key, :user_id => user.id
+      can :manage, User, :id => user.id
     end
   end
 end
