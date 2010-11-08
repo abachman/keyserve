@@ -15,4 +15,8 @@ class SshKey < ActiveRecord::Base
   def self.for_select
     order(:public_key).map {|k| [k.name, k.id]}
   end
+
+  def self.unclaimed
+    where(:user_id => nil)
+  end
 end

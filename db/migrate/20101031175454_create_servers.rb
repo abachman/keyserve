@@ -3,7 +3,6 @@ class CreateServers < ActiveRecord::Migration
     create_table :servers do |t|
       t.string :name
       t.string :hostname
-      t.integer :key_id
 
       t.timestamps
     end

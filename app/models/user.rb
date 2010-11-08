@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :ssh_keys
   has_many :server_users
   has_many :servers, :through => :server_users
+  has_many :accounts, :through => :server_users
 
   def self.by_email
     order('email')

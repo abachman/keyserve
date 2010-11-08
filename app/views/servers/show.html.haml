@@ -5,9 +5,12 @@
 - @server.accounts.each do |account|
   .account
   %strong
-    = account.name
+    = account.username
   = link_to_function "Show Users", "$('#users_#{ account.id }').toggle()"
   .users_list{:id => "users_#{ account.id }", :style => 'display:none'}
     %ul{:style => 'list-style-type: none'}
       - account.users.each do |user|
-        %li= user.email
+        - if can? :show, user
+          %li= link_to user.email, user_path(user)
+        - else
+          %li= user.email

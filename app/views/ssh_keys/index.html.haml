@@ -9,6 +9,6 @@
   - @ssh_keys.each do |key|
     %tr
       %td= key.name
-      %td= key.user ? key.user.email : 'None'
+      %td= key.user ? key.user.email : 'Unclaimed'
       %td
         = link_to 'Delete', ssh_key_path(key), :method => :delete, :confirm => 'Are you sure you want to remove this SSH key?'

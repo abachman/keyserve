@@ -279,6 +279,5 @@ hr.space {background:#fff;color:#fff;visibility:hidden;}
 form fieldset ol { list-style-type: none; margin: 0; padding: 0; }
 form fieldset li { margin: 0 0 8px; }
 form fieldset li label { float: left; width: 100px; display: inline-block; padding: 6px 0 0; }
-
-
+form fieldset .field_with_errors { display: inline-block; border: solid 1px red; padding-left: 4px; padding-right: 4px; }
 

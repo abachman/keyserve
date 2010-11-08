@@ -1,17 +1,30 @@
+# this is how admins interact with the user model
 class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
   end
 
-  def new
+  def show
   end
 
   def servers
     render :json => @user.servers.map {|server| server.hostname}
   end
 
+  def new
+    @user = User.new
+    @ssh_keys_for_select = SshKey.unclaimed.for_select
+  end
+
   def create
+    @user = User.new params[:user]
+    # admin flag cannot be mass-assigned
+    @user.admin = true if params[:user][:admin]
+    if @user.save
+      flash[:success] = "Successfully created new user."
+      redirect_to users_path
+    end
   end
 
   def edit
@@ -19,8 +32,4 @@ class UsersController < ApplicationController
 
   def update
   end
-
-  def destroy
-  end
-
 end

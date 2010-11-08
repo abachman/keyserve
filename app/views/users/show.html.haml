@@ -1,0 +1,12 @@
+%h3= @user.email
+
+%h4 SSH Keys
+
+%ul
+  - @user.ssh_keys.each do |key|
+    %li= key.name
+
+%h4 Accounts
+%ul
+  - @user.accounts.each do |account|
+    %li== #{account.username}@#{account.server.hostname}

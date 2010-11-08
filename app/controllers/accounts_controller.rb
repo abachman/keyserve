@@ -3,10 +3,11 @@ class AccountsController < ApplicationController
   authorize_resource
 
   def index
-    @accounts = @server.accounts
+    @excluding = User.find_by_id params[:exclude]
+    @accounts = @server.accounts.select {|acc| !acc.users.include?(@excluding)} 
     respond_to do |format|
       format.html # default
-      format.json { render :json => @accounts.map {|acc| [acc.name, acc.id]} }
+      format.json { render :json => @accounts.map {|acc| [acc.username, acc.id]} }
     end
   end
 
@@ -18,7 +19,7 @@ class AccountsController < ApplicationController
     @account = Account.new params[:account]
     @account.server = @server
     if @account.save
-      flash[:success] = "Added #{ @account.name } to #{ @server.hostname }"
+      flash[:success] = "Added #{ @account.username } to #{ @server.hostname }"
       redirect_to servers_path
     else
       @ssh_keys_for_select = SshKey.for_select
@@ -34,7 +35,7 @@ class AccountsController < ApplicationController
 
   def destroy
     @account.destroy
-    flash[:success] = "Removed #{ @account.name } from #{ @server.name }"
+    flash[:success] = "Removed #{ @account.username } from #{ @server.name }"
     redirect_to server_accounts_path(@server)
   end
 

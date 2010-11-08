@@ -14,3 +14,14 @@
   %ul
     %li= link_to_unless_current "All Users", users_path
     %li= link_to_unless_current "Add a User", new_user_path
+
+- else
+  %h4 Keys
+  %ul
+    %li= link_to_unless_current "My Keys", ssh_keys_path
+
+  %h4 Servers
+  %ul
+    %li= link_to_unless_current "My Servers", servers_path
+    %li= link_to_unless_current "Request Access", servers_path
+

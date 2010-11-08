@@ -1,0 +1,21 @@
+= form_for @user, :html => {:id => 'user-form'} do |f|
+  %fieldset
+    = f.error_messages
+
+    %ol
+      %li
+        = f.label :email
+        = f.text_field :email
+      %li
+        = label_tag "user[ssh_key_ids]", "Unclaimed Keys"
+        = select_tag("user[ssh_key_ids]", 
+          options_from_collection_for_select(SshKey.unclaimed.for_select, :last, :first),
+          :multiple => true)
+      %li
+        = link_to "Add a new SSH Key", new_ssh_key_path(:return_to => request.path)
+      %li
+        = f.label :admin, "Is admin?"
+        = f.check_box :admin
+
+      %li
+        = f.submit
