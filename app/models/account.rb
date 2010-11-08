@@ -25,4 +25,9 @@ class Account < ActiveRecord::Base
   def set_remote_keys!
     Keymaster.instance.set_remote_keys account.sign_in, ssh_keys.map(&:public_key)
   end
+
+  def self.not_for_user user
+    accounts_subset = "SELECT server_users.account_id FROM server_users WHERE server_users.user_id = ?"
+    where(["NOT id in (#{ accounts_subset })", user.id]) 
+  end
 end
